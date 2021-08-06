@@ -16,7 +16,8 @@ if(os.getenv("WEATHER_API_KEY") == None):
     print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key")
     exit(2)
 
-version = "1.0+build.4 SNAPSHOT"
+version = "1.0+build.5"
+phase = "SNAPSHOT"
 app_name = "weatherpy"
 print(app_name + "\nVersion " + version)
 
