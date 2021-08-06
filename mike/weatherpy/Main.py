@@ -10,21 +10,21 @@ def space():
     return " "
 def kToC(inputtemp):
     return inputtemp-273.15
+def dot():
+    return "."
 
 #Check if api key exists
 if(os.getenv("WEATHER_API_KEY") == None):
     print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key")
     exit(2)
 
+# Variables
 version = "1.0+build.5"
 phase = "SNAPSHOT"
 app_name = "weatherpy"
-print(app_name + "\nVersion " + version)
+degrees = None, 176, 8457, 8451
 
-degree = 176
-def dot():
-    return "."
-
+# Main function
 def weatherget(uszipcode):
     r = requests.get(
         "https://api.openweathermap.org/data/2.5/weather?zip="+uszipcode+",us&appid=" + os.getenv("WEATHER_API_KEY"))
@@ -38,4 +38,6 @@ def weatherget(uszipcode):
     )
 
 
+# Start of program
+print(app_name + "\nVersion " + version)
 weatherget(str(input("Input US ZIP code (localization comming soon:tm:)\n")))
