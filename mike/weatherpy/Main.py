@@ -16,9 +16,9 @@ if(os.getenv("WEATHER_API_KEY") == None):
     print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key")
     exit(2)
 
-version = "1.0+build.3 SNAPSHOT"
-
-print("Version " + version)
+version = "1.0+build.4 SNAPSHOT"
+app_name = "weatherpy"
+print(app_name + "\nVersion " + version)
 
 degree = 176
 def dot():
