@@ -1,5 +1,3 @@
-import unicodedata
-
 import requests
 import os
 
@@ -14,7 +12,7 @@ if(os.getenv("WEATHER_API_KEY") == None):
     print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key")
     exit(2)
 
-version = "1.0-SNAPSHOT+build.1"
+version = "1.0-SNAPSHOT+build.2"
 
 print("Version " + version)
 r = requests.get("https://api.openweathermap.org/data/2.5/weather?zip=08816,us&appid=" + os.getenv("WEATHER_API_KEY"))
