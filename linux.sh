@@ -1,1 +1,1 @@
-export key.env
+source ./key.env
