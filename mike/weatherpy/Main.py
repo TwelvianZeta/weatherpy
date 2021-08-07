@@ -19,7 +19,7 @@ if(os.getenv("WEATHER_API_KEY") == None):
     exit(2)
 
 # Variables
-version = "1.0+build.6"
+version = "1.0+build.7"
 phase = "SNAPSHOT"
 app_name = "weatherpy"
 degrees = None, 176, 8457, 8451
@@ -33,9 +33,13 @@ def weatherget(uszipcode):
     print(
         str(r.json()["name"]) + " " +
         "Temperature = " + str(r.json()["main"]["temp"]) + "K " + str(kToF(r.json()["main"]["temp"])) + chr(8457) + " " + str(kToC(r.json()["main"]["temp"])) + chr(8451) + newLine() +
+        "Feels like " + str(r.json()["main"]["feels_like"]) + "K " + str(kToF(r.json()["main"]["feels_like"])) + chr(8457) + " " + str(kToC(r.json()["main"]["feels_like"])) + chr(8451) + newLine() +
+        "High " + str(r.json()["main"]["temp_max"]) + "K " + str(kToF(r.json()["main"]["temp_max"])) + chr(
+            8457) + " " + str(kToC(r.json()["main"]["temp_max"])) + chr(8451) + newLine() +
+        "Low " + str(r.json()["main"]["temp_min"]) + "K " + str(kToF(r.json()["main"]["temp_min"])) + chr(
+            8457) + " " + str(kToC(r.json()["main"]["temp_min"])) + chr(8451) + newLine() +
         "ID " + str(r.json()["weather"][0]["id"]) + newLine() +
-        "The weather now is " + str(r.json()["weather"][0]["description"]) + ", or " + str(
-            r.json()["weather"][0]["main"]).lower() + dot() + newLine()
+        "The weather now is " + str(r.json()["weather"][0]["description"]) + ", or " + str(r.json()["weather"][0]["main"]).lower() + dot() + newLine()
     )
 
 
