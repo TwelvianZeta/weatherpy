@@ -2,6 +2,9 @@ import requests
 import os
 
 # Functions
+from mike.weatherpy import Constants
+
+
 def kToF(inputTemp):
     return round((inputTemp-273.15) * 9/5 + 32, 2)
 def newLine():
@@ -36,11 +39,7 @@ if(os.getenv("WEATHER_API_KEY") == None):
     print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key")
     exit(2)
 
-# Variables
-version = "1.0-RC.1"
-phase = "SNAPSHOT"
-app_name = "weatherpy"
-degrees = None, 176, 8457, 8451
+
 
 # Main function
 def weatherget(uszipcode):
@@ -54,16 +53,17 @@ def weatherGetCity(location, country):
 def weatherCity(location):
     r = requests.get("https://api.openweathermap.org/data/2.5/weather?zip=" + location + "&appid=" + os.getenv("WEATHER_API_KEY"))
     printData(r)
-
+def init():
+    try:
+        weatherget(str(input("Input US ZIP code, if not just leave empty.\n")))
+    except:
+        print("External location detected!" + newLine())
+        city = str(input("Input city name" + newLine()))
+        try:
+            weatherGetCity(city, str(input("country (optional)" + newLine())))
+        except:
+            weatherCity(city)
 
 # Start of program
-print(app_name + "\nVersion " + version)
-try:
-    weatherget(str(input("Input US ZIP code (localization comming soon:tm:)\n")))
-except:
-    print("failed, location not in us!" + newLine())
-    city = str(input("Input city name" + newLine()))
-    try:
-        weatherGetCity(city, str(input("country (optional)" + newLine())))
-    except:
-        weatherCity(city)
+print(Constants.app_name + newLine() + "Version " + Constants.version)
+init()
