@@ -2,7 +2,7 @@ import requests
 import os
 
 # Functions
-from mike.weatherpy import Constants
+from Constants import *
 
 
 def kToF(inputTemp):
@@ -65,5 +65,5 @@ def init():
             weatherCity(city)
 
 # Start of program
-print(Constants.app_name + newLine() + "Version " + Constants.version)
+print(app_name + newLine() + "Version " + version)
 init()
