@@ -35,6 +35,16 @@ def printData(r):
 
         "The weather now is " + str(r.json()["weather"][0]["description"]) + ", or " + str(r.json()["weather"][0]["main"]).lower() + dot() + newLine()
     )
+def printDataLong(r):
+    print()
+    print(
+        "Daily forecast"
+    )
+    for day in r.json()["daily"]:
+        print(
+            kToC(day["temp"]["day"])
+        )
+
 
 #Check if api key exists
 if(os.getenv("WEATHER_API_KEY") == None):
@@ -42,19 +52,19 @@ if(os.getenv("WEATHER_API_KEY") == None):
     exit(2)
 
 
-def weathergetLongTerm(uszipcode):
-    j = requests.get("https://api.openweathermap.org/data/2.5/weather?zip=" + uszipcode + ",us&appid=" + os.getenv(
-        "WEATHER_API_KEY")).json()
-    lat = j["coord"]["lat"]
-    lon = j["coord"]["lon"]
+def weathergetLongTerm(j):
+    lat = j.json()["coord"]["lat"]
+    lon = j.json()["coord"]["lon"]
     ln = "https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + "&appid=" + os.getenv("WEATHER_API_KEY")
     s = requests.get(ln)
     print(ln)
     print(s.json())
+    printDataLong(s)
 # Main function
 def weatherget(uszipcode):
     r = requests.get("https://api.openweathermap.org/data/2.5/weather?zip="+uszipcode+",us&appid=" + os.getenv("WEATHER_API_KEY"))
     printData(r)
+    weathergetLongTerm(r)
 
 def weatherGetCity(location, country):
     r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + location + "," + country + "&appid=" + os.getenv("WEATHER_API_KEY"))
@@ -67,11 +77,10 @@ def init():
     try:
         uszip = str(input("Input US ZIP code, if not just leave empty.\n"))
         weatherget(uszip)
-        weathergetLongTerm(uszip)
     except Exception as e:
         track = traceback.format_exc()
         print(track)
-        print("External location detected!" + newLine())
+        print("External location detected! (1.1 features not present in this mode)" + newLine())
         city = str(input("Input city name" + newLine()))
         try:
             weatherGetCity(city, str(input("country (optional)" + newLine())))
