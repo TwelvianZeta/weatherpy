@@ -40,7 +40,14 @@ if(os.getenv("WEATHER_API_KEY") == None):
     exit(2)
 
 
-
+def weathergetLongTerm(uszipcode):
+    j = requests.get("https://api.openweathermap.org/data/2.5/weather?zip=" + uszipcode + ",us&appid=" + os.getenv(
+        "WEATHER_API_KEY")).json()
+    lat = j["coord"]["lat"]
+    lon = j["coord"]["lon"]
+    s = requests.get(
+        "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + os.getenv("WEATHER_API_KEY"))
+    print(s.json())
 # Main function
 def weatherget(uszipcode):
     r = requests.get("https://api.openweathermap.org/data/2.5/weather?zip="+uszipcode+",us&appid=" + os.getenv("WEATHER_API_KEY"))
@@ -55,7 +62,10 @@ def weatherCity(location):
     printData(r)
 def init():
     try:
-        weatherget(str(input("Input US ZIP code, if not just leave empty.\n")))
+        uszip = str(input("Input US ZIP code, if not just leave empty.\n"))
+        weatherget(uszip)
+        weathergetLongTerm(uszip)
+        return
     except:
         print("External location detected!" + newLine())
         city = str(input("Input city name" + newLine()))
@@ -67,3 +77,4 @@ def init():
 # Start of program
 print(app_name + newLine() + "Version " + version)
 init()
+
