@@ -1,3 +1,5 @@
+import traceback
+
 import requests
 import os
 
@@ -45,8 +47,9 @@ def weathergetLongTerm(uszipcode):
         "WEATHER_API_KEY")).json()
     lat = j["coord"]["lat"]
     lon = j["coord"]["lon"]
-    s = requests.get(
-        "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + os.getenv("WEATHER_API_KEY"))
+    ln = "https://api.openweathermap.org/data/2.5/onecall?lat=" + str(lat) + "&lon=" + str(lon) + "&appid=" + os.getenv("WEATHER_API_KEY")
+    s = requests.get(ln)
+    print(ln)
     print(s.json())
 # Main function
 def weatherget(uszipcode):
@@ -65,8 +68,9 @@ def init():
         uszip = str(input("Input US ZIP code, if not just leave empty.\n"))
         weatherget(uszip)
         weathergetLongTerm(uszip)
-        return
-    except:
+    except Exception as e:
+        track = traceback.format_exc()
+        print(track)
         print("External location detected!" + newLine())
         city = str(input("Input city name" + newLine()))
         try:
