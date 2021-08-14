@@ -1,16 +1,15 @@
 from datetime import datetime
 import math
 
-from Main import kToC, kToF, weatherGetFlask, degree
+from Main import kToC, kToF, weatherGetFlask, degree, command_line
 
 from flask import Flask, request
 from flask import render_template
 
-from Main import flaskbool
-
 app = Flask(__name__)
 
-
+if not command_line:
+    print("Please import this file and run the \'init()\' function if you wish to use this as a command line app")
 
 @app.route('/bye')
 def bye_world():

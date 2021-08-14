@@ -70,9 +70,6 @@ def weatherCity(location):
 command_line = False
 
 def init():
-    command_line = True
-    if not command_line:
-        print("Please import this file and run the \'init()\' function if you wish to use this as a command line app")
     try:
         uszip = str(input("Input US ZIP code, if not just leave empty.\n"))
         weatherget(uszip)
