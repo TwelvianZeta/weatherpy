@@ -6,6 +6,7 @@ import os
 # Functions
 from Constants import *
 
+flaskbool = False
 
 def kToF(inputTemp):
     return round((inputTemp-273.15) * 9/5 + 32, 2)
@@ -17,38 +18,41 @@ def kToC(inputtemp):
     return round(inputtemp-273.15, 2)
 def dot():
     return "."
+def degree():
+    return "°"
 def printData(r):
     print("Raw data:")
     print(r.json())
     print()
-    print(
-        str(r.json()["name"]) + " " +
-        "Temperature = " + str(r.json()["main"]["temp"]) + "K " + str(kToF(r.json()["main"]["temp"])) + chr(
-            8457) + " " + str(kToC(r.json()["main"]["temp"])) + chr(8451) + newLine() +
-        "Feels like " + str(r.json()["main"]["feels_like"]) + "K " + str(kToF(r.json()["main"]["feels_like"])) + chr(
-            8457) + " " + str(kToC(r.json()["main"]["feels_like"])) + chr(8451) + newLine() +
-        "High " + str(r.json()["main"]["temp_max"]) + "K " + str(kToF(r.json()["main"]["temp_max"])) + chr(
-            8457) + " " + str(kToC(r.json()["main"]["temp_max"])) + chr(8451) + newLine() +
-        "Low " + str(r.json()["main"]["temp_min"]) + "K " + str(kToF(r.json()["main"]["temp_min"])) + chr(
-            8457) + " " + str(kToC(r.json()["main"]["temp_min"])) + chr(8451) + newLine() +
-        "ID " + str(r.json()["weather"][0]["id"]) + newLine() +
-
-        "The weather now is " + str(r.json()["weather"][0]["description"]) + ", or " + str(r.json()["weather"][0]["main"]).lower() + dot() + newLine()
-    )
+    # printvalue = str(r.json()["name"]) + " "
+    # + "Temperature = " + str(r.json()["main"]["temp"]) + "K " + str(kToF(r.json()["main"]["temp"])) + degree()
+    # + " " + str(kToC(r.json()["main"]["temp"])) + degree() + newLine()
+    # + "Feels like " + str(r.json()["main"]["feels_like"]) + "K " + str(kToF(r.json()["main"]["feels_like"])) + degree()
+    # + " " + str(kToC(r.json()["main"]["feels_like"])) + degree() + newLine()
+    # + "High " + str(r.json()["main"]["temp_max"]) + "K " + str(kToF(r.json()["main"]["temp_max"])) + degree()
+    # + " " + str(kToC(r.json()["main"]["temp_max"])) + degree() + newLine()
+    # + "Low " + str(r.json()["main"]["temp_min"]) + "K " + str(kToF(r.json()["main"]["temp_min"])) + degree()
+    # + " " + str(kToC(r.json()["main"]["temp_min"])) + degree() + newLine()
+    # + "ID " + str(r.json()["weather"][0]["id"]) + newLine()
+    # + "The weather now is " + str(r.json()["weather"][0]["description"]) + ", or " + str(r.json()["weather"][0]["main"]).lower() + dot() + newLine()
+    # print(printvalue)
+    return r.json()["main"]["temp"]
 def printDataLong(r):
     print()
     print(
         "Daily forecast"
     )
+    i = 0
     for day in r.json()["daily"]:
         print(
-            kToC(day["temp"]["day"])
+            "It will be " + kToC(day["temp"]["day"] + "in " + i + "days")
         )
+        i=i+1
 
 
 #Check if api key exists
 if(os.getenv("WEATHER_API_KEY") == None):
-    print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key")
+    print("Please create an account at http://openweathermap.org/api, create a key, and run 'setx WEATHER_API_KEY = ' your api key if on windows")
     exit(2)
 
 
@@ -66,6 +70,12 @@ def weatherget(uszipcode):
     printData(r)
     weathergetLongTerm(r)
 
+def weatherGetFlask(uszipcode, country):
+    zip = str(uszipcode)
+    r = requests.get("https://api.openweathermap.org/data/2.5/weather?zip="+zip+"," + country + "&appid=" + os.getenv("WEATHER_API_KEY"))
+
+    return printData(r)
+
 def weatherGetCity(location, country):
     r = requests.get("https://api.openweathermap.org/data/2.5/weather?q=" + location + "," + country + "&appid=" + os.getenv("WEATHER_API_KEY"))
     printData(r)
@@ -73,6 +83,7 @@ def weatherGetCity(location, country):
 def weatherCity(location):
     r = requests.get("https://api.openweathermap.org/data/2.5/weather?zip=" + location + "&appid=" + os.getenv("WEATHER_API_KEY"))
     printData(r)
+
 def init():
     try:
         uszip = str(input("Input US ZIP code, if not just leave empty.\n"))
@@ -88,6 +99,6 @@ def init():
             weatherCity(city)
 
 # Start of program
-print(app_name + newLine() + "Version " + version)
-init()
+print(app_name + newLine() + "Version " + version + space() + phase)
+print("Please import this file and run the \'init()\' function if you wish to use this as a command line app")
 

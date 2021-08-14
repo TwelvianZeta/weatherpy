@@ -1,5 +1,5 @@
 # Variables
-version = "1.1-alpha.4"
+version = "1.1-alpha.5+build.1"
 phase = "ALPHA"
 app_name = "weatherpy"
 degrees = None, 176, 8457, 8451
