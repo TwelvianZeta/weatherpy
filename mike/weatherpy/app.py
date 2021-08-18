@@ -35,4 +35,4 @@ def weather():
     return render_template("weather.html", weather = temperatureC, weatherF = temperatureF, weatherK = temperature)
 
 if __name__ == '__main__':
-    app.run(debug = True, port = 80)
+    app.run(debug = True, port = 8080)
